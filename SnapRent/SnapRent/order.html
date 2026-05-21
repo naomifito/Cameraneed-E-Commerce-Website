@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Pemesanan - SnapRent Multimedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+  </head>
+  <body class="bg-gray-50 text-slate-900">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-20">
+      <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-900 text-white flex items-center justify-center font-semibold">S</div>
+          <span class="font-semibold text-blue-900">SnapRent Multimedia</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="index.html#hero" class="hover:text-blue-600">Beranda</a>
+          <a href="catalog.html" class="hover:text-blue-600">Katalog</a>
+          <a href="orders.html" class="hover:text-blue-600">Riwayat Order</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 text-sm">
+      <a href="javascript:history.back()" class="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-blue-700 mb-4">← Kembali</a>
+
+      <header class="mb-4">
+        <h1 class="text-2xl font-semibold text-blue-900 mb-1">Form Pemesanan</h1>
+        <p class="text-xs text-slate-600">Isi data di bawah ini untuk melakukan pemesanan. Tidak perlu login.</p>
+      </header>
+
+      <section id="product-summary" class="bg-white rounded-lg border p-4 mb-5 hidden"></section>
+
+      <form id="order-form" class="bg-white rounded-lg border p-4 space-y-4">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="fullName">Nama lengkap</label>
+            <input id="fullName" name="fullName" type="text" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="whatsApp">Nomor WhatsApp</label>
+            <input id="whatsApp" name="whatsApp" type="tel" required placeholder="08xxxxxxxxxx" class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-700 mb-1" for="product">Pilih produk</label>
+          <select id="product" name="product" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"></select>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="rentalDate">Tanggal sewa</label>
+            <input id="rentalDate" name="rentalDate" type="date" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="duration">Durasi (hari)</label>
+            <input id="duration" name="duration" type="number" min="1" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="ktp">Upload KTP <span class="text-red-600">*</span></label>
+            <div class="flex items-center border border-slate-300 rounded-md py-1 px-2 bg-white">
+              <span class="text-xs text-slate-500 mr-2">ID Kartu Identitas:</span>
+              <input id="ktp" name="ktp" type="text" placeholder="ID-12345678" required class="flex-1 text-xs text-slate-600 border-none focus:ring-0 focus:outline-none" />
+            </div>
+            <p class="text-[10px] text-slate-500 mt-1">*Masukkan nomor ID kartu identitas Anda</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-700 mb-1" for="notes">Catatan tambahan</label>
+          <textarea id="notes" name="notes" rows="3" class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Contoh: kebutuhan shooting interview, butuh operator, dll."></textarea>
+        </div>
+
+        <div class="flex items-start gap-2">
+          <input id="agree" type="checkbox" required class="mt-0.5" />
+          <label for="agree" class="text-xs text-slate-700">Saya menyatakan data yang saya isi benar dan bersedia mengikuti ketentuan penyewaan.</label>
+        </div>
+
+        <p class="text-[11px] text-slate-500">Sebelum order disimpan, akan muncul reminder singkat tentang pesanan Anda.</p>
+
+        <input type="hidden" id="orderId" />
+
+        <div class="flex flex-wrap gap-3 pt-2">
+          <button type="submit" class="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">Kirim Pemesanan</button>
+          <a href="orders.html" class="text-xs text-slate-600 hover:text-blue-700">Lihat riwayat order</a>
+        </div>
+      </form>
+
+      <div id="edit-warning" class="mt-4 hidden text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-md px-3 py-2"></div>
+    </main>
+
+    <div id="policy-modal" class="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-30 hidden">
+      <div class="bg-white rounded-lg max-w-md w-full mx-4 p-4 text-sm">
+        <h2 class="text-base font-semibold text-blue-900 mb-2">Reminder Pemesanan</h2>
+        <p class="text-xs text-slate-700 mb-3">Terima kasih telah memesan di SnapRent Multimedia! Mohon diingat:</p>
+        <ul class="list-disc list-inside text-xs text-slate-700 mb-3">
+          <li>Kami akan mempersiapkan peralatan sesuai pesanan Anda</li>
+          <li>Jika ada perubahan rencana, mohon informasikan kepada kami</li>
+          <li>Pesanan yang sudah dikonfirmasi akan siap pada tanggal yang ditentukan</li>
+        </ul>
+        <p class="text-[11px] text-slate-500 mb-3">Dengan menekan "Lanjutkan", pesanan Anda akan diproses.</p>
+        <div class="flex justify-end gap-2 text-xs">
+          <button id="policy-cancel" class="px-3 py-1.5 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50">Kembali</button>
+          <button id="policy-confirm" class="px-3 py-1.5 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700">Lanjutkan</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="border-t bg-gray-50 mt-8">
+      <div class="max-w-4xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>© <span id="year"></span> SnapRent Multimedia.</p>
+        <a href="https://wa.me/6281219498744" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-yellow-300 text-blue-900 font-semibold hover:bg-yellow-400">WhatsApp Admin</a>
+      </div>
+    </footer>
+
+    <script src="js/api-adapter.js"></script>
+    <script src="app.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const form = document.getElementById('order-form');
+      const productSelect = document.getElementById('product');
+      const productSummary = document.getElementById('product-summary');
+      const policyModal = document.getElementById('policy-modal');
+      const policyConfirm = document.getElementById('policy-confirm');
+      const policyCancel = document.getElementById('policy-cancel');
+      const orderIdInput = document.getElementById('orderId');
+      const editWarning = document.getElementById('edit-warning');
+
+      let pendingSubmitData = null;
+
+      function fillProductOptions(selectedId) {
+        const catalog = window.App.getCatalog();
+        productSelect.innerHTML = '<option value="" disabled selected>Pilih produk</option>' +
+          catalog
+            .map(
+              (p) => `<option value="${p.id}" ${selectedId === p.id ? 'selected' : ''}>${p.category} - ${p.name} (${window.App.formatPrice(p.pricePerDay)}/hari)</option>`
+            )
+            .join('');
+      }
+
+      function showProductSummary(productId) {
+        const product = window.App.findProductById(productId);
+        if (!product) {
+          productSummary.classList.add('hidden');
+          return;
+        }
+        productSummary.classList.remove('hidden');
+        productSummary.innerHTML = `
+          <div class="p-3 bg-blue-50 rounded-md">
+            <div class="text-xs">
+              <p class="text-[11px] uppercase tracking-wide text-blue-700 font-semibold mb-1">${product.category}</p>
+              <p class="font-semibold text-blue-900 text-base mb-2">${product.name}</p>
+              <p class="text-slate-700 mb-2 text-sm">${product.specs}</p>
+              <p class="font-semibold text-blue-700 bg-white inline-block px-2 py-1 rounded">${window.App.formatPrice(product.pricePerDay)}/hari</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function openPolicyModal(payload) {
+        pendingSubmitData = payload;
+        policyModal.classList.remove('hidden');
+      }
+
+      function closePolicyModal() {
+        policyModal.classList.add('hidden');
+        pendingSubmitData = null;
+      }
+
+      function handleFinalSubmit() {
+        if (!pendingSubmitData) return;
+        const now = new Date().toISOString();
+        const isEdit = !!pendingSubmitData.id;
+        const base = {
+          id: pendingSubmitData.id || window.App.generateOrderId(),
+          fullName: pendingSubmitData.fullName,
+          whatsApp: pendingSubmitData.whatsApp,
+          productId: pendingSubmitData.productId,
+          rentalDate: pendingSubmitData.rentalDate,
+          duration: pendingSubmitData.duration,
+          notes: pendingSubmitData.notes,
+          ktpFileName: pendingSubmitData.ktpFileName,
+          createdAt: pendingSubmitData.createdAt || now,
+          updatedAt: now,
+          status: pendingSubmitData.status || 'MENUNGGU_PEMBAYARAN',
+        };
+
+        if (isEdit) {
+          window.App.updateOrder(base.id, () => base);
+        } else {
+          window.App.addOrder(base);
+        }
+
+        const url = new URL('payment.html', window.location.href);
+        url.searchParams.set('orderId', base.id);
+        window.location.href = url.toString();
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        const ktpFile = data.get('ktp');
+        const payload = {
+          id: orderIdInput.value || null,
+          fullName: data.get('fullName')?.toString().trim(),
+          whatsApp: data.get('whatsApp')?.toString().trim(),
+          productId: data.get('product')?.toString(),
+          rentalDate: data.get('rentalDate')?.toString(),
+          duration: parseInt(data.get('duration') || '1', 10),
+          notes: data.get('notes')?.toString().trim(),
+          ktpFileName: data.get('ktp')?.toString().trim() || null,
+        };
+
+        if (!payload.fullName || !payload.whatsApp || !payload.productId || !payload.rentalDate || !payload.duration) {
+          return;
+        }
+
+        if (!payload.ktpFileName) {
+          alert('Nomor ID kartu identitas wajib diisi.');
+          return;
+        }
+
+        if (!document.getElementById('agree').checked) {
+          alert('Anda harus menyetujui ketentuan penyewaan.');
+          return;
+        }
+
+        const existingId = orderIdInput.value;
+        if (existingId) {
+          const existing = window.App.getOrderById(existingId);
+          if (!existing) {
+            alert('Order tidak ditemukan.');
+            return;
+          }
+          if (!window.App.canEditOrder(existing)) {
+            alert('Order tidak dapat diedit karena sudah melewati batas waktu 8 jam atau statusnya bukan menunggu pembayaran.');
+            return;
+          }
+          payload.createdAt = existing.createdAt;
+          payload.status = existing.status;
+        }
+
+        openPolicyModal(payload);
+      });
+
+      policyCancel.addEventListener('click', function () {
+        closePolicyModal();
+      });
+
+      policyConfirm.addEventListener('click', function () {
+        handleFinalSubmit();
+      });
+
+      productSelect.addEventListener('change', function () {
+        showProductSummary(this.value);
+      });
+
+      (function initFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('productId');
+        const orderId = params.get('orderId');
+        fillProductOptions(productId || undefined);
+        if (productId) {
+          showProductSummary(productId);
+        }
+
+        const today = new Date();
+        const iso = today.toISOString().slice(0, 10);
+        document.getElementById('rentalDate').setAttribute('min', iso);
+
+        if (orderId) {
+          const order = window.App.getOrderById(orderId);
+          if (!order) return;
+          orderIdInput.value = order.id;
+          document.getElementById('fullName').value = order.fullName;
+          document.getElementById('whatsApp').value = order.whatsApp;
+          document.getElementById('product').value = order.productId;
+          document.getElementById('rentalDate').value = order.rentalDate.slice(0, 10);
+          document.getElementById('duration').value = order.duration;
+          document.getElementById('notes').value = order.notes || '';
+          showProductSummary(order.productId);
+
+          if (!window.App.canEditOrder(order)) {
+            editWarning.classList.remove('hidden');
+            editWarning.textContent = 'Order ini hanya dapat dilihat karena sudah diproses. Form tidak dapat diedit.';
+            Array.from(form.elements).forEach((el) => {
+              if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+                el.setAttribute('disabled', 'true');
+              }
+            });
+          } else {
+            editWarning.classList.remove('hidden');
+            editWarning.textContent = 'Anda sedang mengedit order yang sudah ada.';
+          }
+        } else {
+          fillProductOptions(productId || undefined);
+        }
+      })();
+    </script>
+  </body>
+</html>

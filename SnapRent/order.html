@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Pemesanan - SnapRent Multimedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 text-slate-900">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-20">
+      <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-900 text-white flex items-center justify-center font-semibold">S</div>
+          <span class="font-semibold text-blue-900">SnapRent Multimedia</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="index.html#hero" class="hover:text-blue-600">Beranda</a>
+          <a href="catalog.html" class="hover:text-blue-600">Katalog</a>
+          <a href="orders.html" class="hover:text-blue-600">Riwayat Order</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 text-sm">
+      <a href="javascript:history.back()" class="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-blue-700 mb-4">← Kembali</a>
+
+      <header class="mb-4">
+        <h1 class="text-2xl font-semibold text-blue-900 mb-1">Form Pemesanan</h1>
+        <p class="text-xs text-slate-600">Isi data di bawah ini untuk melakukan pemesanan. Tidak perlu login.</p>
+      </header>
+
+      <section id="product-summary" class="bg-white rounded-lg border p-4 mb-5 hidden"></section>
+
+      <section id="items-editor" class="bg-white rounded-lg border p-4 mb-5 hidden">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <div>
+            <p class="text-xs uppercase tracking-wide text-blue-700 font-semibold">Item Pesanan</p>
+            <p class="text-[11px] text-slate-500">Tambah/hapus barang, ubah jumlah dan durasi per item.</p>
+          </div>
+          <button type="button" id="add-item" class="px-3 py-1.5 rounded-md bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700">+ Tambah Barang</button>
+        </div>
+        <div id="items-list" class="space-y-2"></div>
+      </section>
+
+      <form id="order-form" class="bg-white rounded-lg border p-4 space-y-4">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="fullName">Nama lengkap</label>
+            <input id="fullName" name="fullName" type="text" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="whatsApp">Nomor WhatsApp</label>
+            <input id="whatsApp" name="whatsApp" type="tel" required placeholder="08xxxxxxxxxx" class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+        </div>
+
+        <div id="product-field">
+          <label class="block text-xs font-medium text-slate-700 mb-1" for="product">Pilih produk</label>
+          <select id="product" name="product" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"></select>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="rentalDate">Tanggal sewa</label>
+            <input id="rentalDate" name="rentalDate" type="date" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div id="duration-field">
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="duration">Durasi (hari)</label>
+            <input id="duration" name="duration" type="number" min="1" required class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-700 mb-1" for="ktp">Upload KTP <span class="text-red-600">*</span></label>
+            <div class="flex items-center border border-slate-300 rounded-md py-1 px-2 bg-white">
+              <span class="text-xs text-slate-500 mr-2">ID Kartu Identitas:</span>
+              <input id="ktp" name="ktp" type="text" placeholder="ID-12345678" required class="flex-1 text-xs text-slate-600 border-none focus:ring-0 focus:outline-none" />
+            </div>
+            <p class="text-[10px] text-slate-500 mt-1">*Masukkan nomor ID kartu identitas Anda</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-700 mb-1" for="notes">Catatan tambahan</label>
+          <textarea id="notes" name="notes" rows="3" class="w-full px-3 py-2 rounded-md border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Contoh: kebutuhan shooting interview, butuh operator, dll."></textarea>
+        </div>
+
+        <div class="flex items-start gap-2">
+          <input id="agree" type="checkbox" required class="mt-0.5" />
+          <label for="agree" class="text-xs text-slate-700">Saya menyatakan data yang saya isi benar dan bersedia mengikuti ketentuan penyewaan.</label>
+        </div>
+
+        <p class="text-[11px] text-slate-500">Sebelum order disimpan, akan muncul reminder singkat tentang pesanan Anda.</p>
+
+        <input type="hidden" id="orderId" />
+
+        <div class="flex flex-wrap gap-3 pt-2">
+          <button type="submit" class="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">Kirim Pemesanan</button>
+          <a href="orders.html" class="text-xs text-slate-600 hover:text-blue-700">Lihat riwayat order</a>
+        </div>
+      </form>
+
+      <div id="edit-warning" class="mt-4 hidden text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-md px-3 py-2"></div>
+    </main>
+
+    <div id="policy-modal" class="fixed inset-0 bg-slate-900/40 flex items-center justify-center z-30 hidden">
+      <div class="bg-white rounded-lg max-w-md w-full mx-4 p-4 text-sm">
+        <h2 class="text-base font-semibold text-blue-900 mb-2">Reminder Pemesanan</h2>
+        <p class="text-xs text-amber-700 font-medium mb-2">Ketentuan Penting:</p>
+        <ul class="list-disc list-inside text-xs text-slate-700 mb-3">
+          <li>Anda dapat mengedit pemesanan jika ada kesalahan order, nama, atau nomor telepon dalam jangka waktu 8 jam setelah pemesanan</li>
+          <li>Anda dapat membatalkan pesanan maksimal H-2 dari tanggal sewa dengan pengembalian DP penuh</li>
+          <li>Jika pembatalan dilakukan pada H-1, DP yang sudah diberikan tidak dapat dikembalikan</li>
+        </ul>
+        <p class="text-[11px] text-slate-500 mb-3">Dengan menekan "Lanjutkan", pesanan Anda akan disimpan dan akan diproses setelah pembayaran DP.</p>
+        <div class="flex justify-end gap-2 text-xs">
+          <button id="policy-cancel" class="px-3 py-1.5 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50">Kembali</button>
+          <button id="policy-confirm" class="px-3 py-1.5 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700">Lanjutkan</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="border-t bg-gray-50 mt-8">
+      <div class="max-w-4xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>© <span id="year"></span> SnapRent Multimedia.</p>
+        <a href="https://wa.me/6281219498744" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-yellow-300 text-blue-900 font-semibold hover:bg-yellow-400">WhatsApp Admin</a>
+      </div>
+    </footer>
+
+    <script src="js/api-adapter.js"></script>
+    <script src="js/db-adapter.js"></script>
+    <script src="app.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const form = document.getElementById('order-form');
+      const productSelect = document.getElementById('product');
+      const productSummary = document.getElementById('product-summary');
+      const policyModal = document.getElementById('policy-modal');
+      const policyConfirm = document.getElementById('policy-confirm');
+      const policyCancel = document.getElementById('policy-cancel');
+      const orderIdInput = document.getElementById('orderId');
+      const editWarning = document.getElementById('edit-warning');
+
+      const itemsEditor = document.getElementById('items-editor');
+      const itemsList = document.getElementById('items-list');
+      const addItemBtn = document.getElementById('add-item');
+
+      let pendingSubmitData = null;
+
+      async function fillProductOptions(selectedId) {
+        const catalog = await window.App.getCatalog();
+        productSelect.innerHTML = '<option value="" disabled selected>Pilih produk</option>' +
+          (catalog || [])
+            .map(
+              (p) => {
+                const id = p.product_id || p.id;
+                const category = p.category_name || p.category;
+                const price = p.pricePerDay ?? p.price_per_day;
+                return `<option value="${id}" ${selectedId === id ? 'selected' : ''}>${category} - ${p.name} (${window.App.formatPrice(Number(price) || 0)}/hari)</option>`;
+              }
+            )
+            .join('');
+      }
+
+      function renderItemsEditorRow(item, catalog) {
+        const productId = item.productId || item.product_id || '';
+        const qty = item.quantity || 1;
+        const dur = item.duration || 1;
+
+        const options = (catalog || []).map((p) => {
+          const id = p.product_id || p.id;
+          const category = p.category_name || p.category;
+          return `<option value="${id}" ${id === productId ? 'selected' : ''}>${category} - ${p.name}</option>`;
+        }).join('');
+
+        return `
+          <div class="item-row grid grid-cols-12 gap-2 items-center">
+            <div class="col-span-6">
+              <select class="item-product w-full px-2 py-2 rounded-md border border-slate-300 text-xs" required>
+                <option value="" disabled ${productId ? '' : 'selected'}>Pilih produk</option>
+                ${options}
+              </select>
+            </div>
+            <div class="col-span-2">
+              <input class="item-qty w-full px-2 py-2 rounded-md border border-slate-300 text-xs" type="number" min="1" value="${qty}" />
+            </div>
+            <div class="col-span-3">
+              <input class="item-dur w-full px-2 py-2 rounded-md border border-slate-300 text-xs" type="number" min="1" value="${dur}" />
+            </div>
+            <div class="col-span-1 flex justify-end">
+              <button type="button" class="remove-item text-red-600 text-xs hover:underline">Hapus</button>
+            </div>
+          </div>
+        `;
+      }
+
+      function getItemsFromEditor() {
+        const rows = Array.from(itemsList.querySelectorAll('.item-row'));
+        const items = rows.map((row) => {
+          const productId = row.querySelector('.item-product')?.value;
+          const quantity = parseInt(row.querySelector('.item-qty')?.value || '1', 10);
+          const duration = parseInt(row.querySelector('.item-dur')?.value || '1', 10);
+          return { productId, quantity, duration };
+        }).filter((it) => it.productId);
+        return items;
+      }
+
+      async function showProductSummary(productId) {
+        const product = await window.App.findProductById(productId);
+        if (!product) {
+          productSummary.classList.add('hidden');
+          return;
+        }
+        const price = product.pricePerDay ?? product.price_per_day;
+        productSummary.classList.remove('hidden');
+        productSummary.innerHTML = `
+          <div class="p-3 bg-blue-50 rounded-md">
+            <div class="text-xs">
+              <p class="text-[11px] uppercase tracking-wide text-blue-700 font-semibold mb-1">${product.category_name || product.category}</p>
+              <p class="font-semibold text-blue-900 text-base mb-2">${product.name}</p>
+              <p class="text-slate-700 mb-2 text-sm">${product.specs}</p>
+              <p class="font-semibold text-blue-700 bg-white inline-block px-2 py-1 rounded">${window.App.formatPrice(Number(price) || 0)}/hari</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function openPolicyModal(payload) {
+        pendingSubmitData = payload;
+        policyModal.classList.remove('hidden');
+      }
+
+      function closePolicyModal() {
+        policyModal.classList.add('hidden');
+        pendingSubmitData = null;
+      }
+
+      async function handleFinalSubmit() {
+        if (!pendingSubmitData) return;
+        const now = new Date().toISOString();
+        const isEdit = !!pendingSubmitData.id;
+        
+        try {
+          if (isEdit) {
+            // Multi-item edit uses update_items endpoint
+            if (pendingSubmitData.items && Array.isArray(pendingSubmitData.items) && pendingSubmitData.items.length > 0) {
+              await window.App.updateOrderItems(pendingSubmitData.id, {
+                fullName: pendingSubmitData.fullName,
+                whatsApp: pendingSubmitData.whatsApp,
+                ktpId: pendingSubmitData.ktpId,
+                rentalDate: pendingSubmitData.rentalDate,
+                notes: pendingSubmitData.notes || '',
+                items: pendingSubmitData.items,
+              });
+
+              const url = new URL('payment.html', window.location.href);
+              url.searchParams.set('orderId', pendingSubmitData.id);
+              window.location.href = url.toString();
+              return;
+            }
+
+            // Single-item fallback
+            const base = {
+              id: pendingSubmitData.id,
+              fullName: pendingSubmitData.fullName,
+              whatsApp: pendingSubmitData.whatsApp,
+              productId: pendingSubmitData.productId,
+              rentalDate: pendingSubmitData.rentalDate,
+              duration: pendingSubmitData.duration,
+              notes: pendingSubmitData.notes,
+              ktpId: pendingSubmitData.ktpId,
+              createdAt: pendingSubmitData.createdAt || now,
+              updatedAt: now,
+              status: pendingSubmitData.status || 'MENUNGGU_PEMBAYARAN',
+            };
+            await window.App.updateOrder(base.id, () => base);
+
+            const url = new URL('payment.html', window.location.href);
+            url.searchParams.set('orderId', base.id);
+            window.location.href = url.toString();
+            return;
+          }
+
+          // New order via API
+          const apiOrder = {
+            fullName: pendingSubmitData.fullName,
+            whatsApp: pendingSubmitData.whatsApp,
+            ktpId: pendingSubmitData.ktpId,
+            rentalDate: pendingSubmitData.rentalDate,
+            notes: pendingSubmitData.notes || '',
+            items: [
+              {
+                productId: pendingSubmitData.productId,
+                quantity: 1,
+                duration: pendingSubmitData.duration || 1,
+              },
+            ],
+          };
+
+          const orderId = await window.App.addOrder(apiOrder);
+          const url = new URL('payment.html', window.location.href);
+          url.searchParams.set('orderId', orderId);
+          window.location.href = url.toString();
+        } catch (e) {
+          console.error('Gagal membuat order:', e);
+          alert('Gagal membuat order. Silakan coba lagi.');
+        }
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        const ktpFile = data.get('ktp');
+        const payload = {
+          id: orderIdInput.value || null,
+          fullName: data.get('fullName')?.toString().trim(),
+          whatsApp: data.get('whatsApp')?.toString().trim(),
+          productId: data.get('product')?.toString(),
+          rentalDate: data.get('rentalDate')?.toString(),
+          duration: parseInt(data.get('duration') || '1', 10),
+          notes: data.get('notes')?.toString().trim(),
+          ktpId: data.get('ktp')?.toString().trim() || null,
+        };
+
+        // If multi-item editor is active, take items from editor and relax single-product validation
+        if (!itemsEditor.classList.contains('hidden')) {
+          payload.items = getItemsFromEditor();
+        }
+
+        if (!payload.fullName || !payload.whatsApp || !payload.rentalDate) {
+          return;
+        }
+
+        if (!itemsEditor.classList.contains('hidden')) {
+          if (!payload.items || payload.items.length === 0) {
+            alert('Minimal pilih 1 barang untuk pesanan.');
+            return;
+          }
+        } else if (!payload.productId || !payload.duration) {
+          return;
+        }
+
+        if (!payload.ktpId) {
+          alert('Nomor ID kartu identitas wajib diisi.');
+          return;
+        }
+
+        if (!document.getElementById('agree').checked) {
+          alert('Anda harus menyetujui ketentuan penyewaan.');
+          return;
+        }
+
+        const existingId = orderIdInput.value;
+        if (existingId) {
+          const existing = await window.App.getOrderById(existingId);
+          if (!existing) {
+            alert('Order tidak ditemukan.');
+            return;
+          }
+          if (!window.App.canEditOrder(existing)) {
+            alert('Order tidak dapat diedit karena sudah melewati batas waktu 8 jam atau statusnya bukan menunggu pembayaran.');
+            return;
+          }
+          payload.createdAt = existing.createdAt;
+          payload.status = existing.status;
+        }
+
+        openPolicyModal(payload);
+      });
+
+      policyCancel.addEventListener('click', function () {
+        closePolicyModal();
+      });
+
+      policyConfirm.addEventListener('click', async function () {
+        await handleFinalSubmit();
+      });
+
+      productSelect.addEventListener('change', function () {
+        showProductSummary(this.value);
+      });
+
+      (async function initFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('productId');
+        const orderId = params.get('orderId');
+        await fillProductOptions(productId || undefined);
+        if (productId) {
+          // If user clicked "Pesan" from catalog, lock product selection
+          productSelect.value = productId;
+          await showProductSummary(productId);
+          const productField = document.getElementById('product-field');
+          if (productField) productField.classList.add('hidden');
+        }
+
+        const today = new Date();
+        const iso = today.toISOString().slice(0, 10);
+        document.getElementById('rentalDate').setAttribute('min', iso);
+
+        if (orderId) {
+          const order = await window.App.getOrderById(orderId);
+          if (!order) return;
+          orderIdInput.value = order.order_id || order.id;
+          document.getElementById('fullName').value = order.full_name || order.fullName;
+          document.getElementById('whatsApp').value = order.whatsapp || order.whatsApp;
+          // If API returns multi-item order, enable editor
+          if (Array.isArray(order.items) && order.items.length > 0) {
+            const productField = document.getElementById('product-field');
+            if (productField) productField.classList.add('hidden');
+            const durationField = document.getElementById('duration-field');
+            if (durationField) durationField.classList.add('hidden');
+
+            // Show editor
+            itemsEditor.classList.remove('hidden');
+            const catalog = await window.App.getCatalog();
+            itemsList.innerHTML = order.items.map((it) => {
+              return renderItemsEditorRow({
+                productId: it.product_id || it.productId,
+                quantity: it.quantity,
+                duration: it.duration,
+              }, catalog);
+            }).join('');
+
+            // Bind remove
+            itemsList.addEventListener('click', function(ev) {
+              const btn = ev.target.closest('.remove-item');
+              if (!btn) return;
+              const row = btn.closest('.item-row');
+              if (row) row.remove();
+            });
+
+            addItemBtn.addEventListener('click', async function() {
+              const cat = await window.App.getCatalog();
+              itemsList.insertAdjacentHTML('beforeend', renderItemsEditorRow({ productId: '', quantity: 1, duration: 1 }, cat));
+            });
+
+            // Keep product select value for native required validation
+            document.getElementById('product').value = order.items[0].product_id || order.items[0].productId;
+          } else {
+            document.getElementById('product').value = order.product_id || order.productId;
+          }
+          document.getElementById('rentalDate').value = (order.rental_date || order.rentalDate).slice(0, 10);
+          document.getElementById('duration').value = (order.duration || 1);
+          document.getElementById('notes').value = order.notes || '';
+          if (!(Array.isArray(order.items) && order.items.length > 0)) {
+            await showProductSummary(order.product_id || order.productId);
+          }
+
+          if (!window.App.canEditOrder(order)) {
+            editWarning.classList.remove('hidden');
+            editWarning.textContent = 'Order ini hanya dapat dilihat karena sudah diproses. Form tidak dapat diedit.';
+            Array.from(form.elements).forEach((el) => {
+              if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+                el.setAttribute('disabled', 'true');
+              }
+            });
+          } else {
+            editWarning.classList.remove('hidden');
+            editWarning.textContent = 'Anda sedang mengedit order yang sudah ada.';
+          }
+        } else {
+          await fillProductOptions(productId || undefined);
+        }
+      })();
+    </script>
+  </body>
+</html>

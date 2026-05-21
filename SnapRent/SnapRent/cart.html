@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keranjang - SnapRent Multimedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+  
+  </head>
+  <body class="bg-gray-50 text-slate-900">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-20">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-900 text-white flex items-center justify-center font-semibold">S</div>
+          <span class="font-semibold text-blue-900">SnapRent Multimedia</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="index.html#hero" class="hover:text-blue-600">Beranda</a>
+          <a href="catalog.html" class="hover:text-blue-600">Katalog</a>
+          <a href="orders.html" class="hover:text-blue-600">Riwayat Order</a>
+          <a href="contact.html" class="hover:text-blue-600">Kontak</a>
+        </nav>
+        <a href="cart.html" class="hidden md:inline-flex items-center px-4 py-2 rounded-md bg-yellow-400 text-blue-900 text-sm font-semibold hover:bg-yellow-300">
+          Keranjang <span id="cart-count" class="ml-1.5 inline-flex w-5 h-5 rounded-full bg-blue-900 text-white items-center justify-center text-xs">0</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 text-sm">
+      <header class="mb-6">
+        <h1 class="text-2xl font-semibold text-blue-900 mb-1">Keranjang Sewa</h1>
+        <p class="text-xs text-slate-600">Daftar produk yang akan disewa. Sesuaikan jumlah atau hapus item yang tidak jadi disewa.</p>
+      </header>
+
+      <div id="empty-cart" class="hidden bg-white border rounded-lg p-4 text-center py-10">
+        <p class="text-slate-600 mb-3">Keranjang Anda kosong</p>
+        <a href="catalog.html" class="inline-flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-semibold hover:bg-blue-700">Lihat Katalog</a>
+      </div>
+
+      <div id="cart-container" class="hidden">
+        <section id="cart-items" class="space-y-3 mb-6"></section>
+
+        <div class="bg-white rounded-lg border p-4 mb-6">
+          <div class="flex flex-wrap justify-between items-center">
+            <div>
+              <p class="text-xs text-slate-600">Total Sewa</p>
+              <p id="cart-total" class="text-lg font-semibold text-blue-900">Rp 0</p>
+              <p class="text-[11px] text-slate-500 mt-1">*Harga per hari × jumlah</p>
+            </div>
+            <div>
+              <button id="clear-cart" class="text-xs text-red-600 hover:underline mr-2">Kosongkan Keranjang</button>
+              <a href="checkout-form.html" id="checkout-btn" class="inline-flex px-5 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">Lanjutkan Pemesanan</a>
+            </div>
+          </div>
+          <div id="cart-warnings" class="mt-3 text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-md px-3 py-2 hidden"></div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 items-center mb-8">
+          <p class="text-xs text-slate-600">* Anda dapat mengatur durasi sewa berbeda untuk setiap item</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="border-t bg-gray-50 mt-8">
+      <div class="max-w-5xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>© <span id="year"></span> SnapRent Multimedia.</p>
+        <a href="https://wa.me/6281219498744" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-yellow-300 text-blue-900 font-semibold hover:bg-yellow-400">WhatsApp Admin</a>
+      </div>
+    </footer>
+    
+    <script src="js/api-adapter.js"></script>
+    <script src="app.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      
+      const cartItemsEl = document.getElementById('cart-items');
+      const cartCountEl = document.getElementById('cart-count');
+      const cartTotalEl = document.getElementById('cart-total');
+      const emptyCartEl = document.getElementById('empty-cart');
+      const cartContainerEl = document.getElementById('cart-container');
+      const clearCartBtn = document.getElementById('clear-cart');
+
+      function renderCartItem(item, product) {
+        const isAvailable = product.isAvailable && product.stock > 0;
+        const stockExceeded = item.quantity > product.stock;
+        const stockWarning = stockExceeded ? 
+          `<div class="text-xs text-red-600 font-medium mb-1">⚠️ Melebihi stok tersedia (${product.stock})</div>` : 
+          '';
+        
+        // Default durasi jika belum diset
+        const duration = item.duration || 1;
+        
+        // Hitung subtotal per item
+        const itemSubtotal = product.pricePerDay * item.quantity * duration;
+        
+        return `
+          <article class="bg-white border rounded-lg p-3 flex flex-col md:flex-row md:items-center gap-3 ${!isAvailable ? 'opacity-70' : ''}">
+            <img src="${product.image}" alt="${product.name}" class="w-20 h-16 object-cover rounded bg-slate-100" />
+            <div class="flex-1">
+              <div class="flex flex-wrap justify-between">
+                <h3 class="text-xs font-semibold text-blue-900 mb-1">${product.name}</h3>
+                <p class="text-xs font-medium text-blue-700">${window.App.formatPrice(itemSubtotal)}</p>
+              </div>
+              <p class="text-[11px] text-slate-600 mb-1">${product.specs}</p>
+              <p class="text-[11px] text-slate-700 mt-1">${window.App.formatPrice(product.pricePerDay)}/hari</p>
+              ${!isAvailable ? `<p class="text-[11px] font-medium text-red-600 mt-1">Tidak tersedia</p>` : ''}
+              ${stockWarning}
+              
+              <div class="grid grid-cols-2 gap-3 mt-2">
+                <div>
+                  <p class="text-[11px] text-slate-600 mb-1">Jumlah</p>
+                  <div class="flex items-center border rounded-md overflow-hidden">
+                    <button class="quantity-dec px-2 py-1 bg-slate-50 hover:bg-slate-100 text-slate-700" data-product-id="${item.productId}" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
+                    <span class="px-3 py-1 text-xs text-center min-w-[32px]">${item.quantity}</span>
+                    <button class="quantity-inc px-2 py-1 bg-slate-50 hover:bg-slate-100 text-slate-700" data-product-id="${item.productId}" ${(item.quantity >= product.stock || !isAvailable) ? 'disabled' : ''}>+</button>
+                  </div>
+                  <div class="text-[10px] text-slate-500 mt-1">${isAvailable ? `Stok: ${product.stock}` : 'Tidak tersedia'}</div>
+                </div>
+                
+                <div>
+                  <p class="text-[11px] text-slate-600 mb-1">Durasi (hari)</p>
+                  <div class="flex items-center">
+                    <input type="number" min="1" value="${duration}" class="duration-input w-16 text-xs border rounded-md px-2 py-1" data-product-id="${item.productId}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex justify-end mt-2 md:mt-0">
+              <button class="remove-item text-[11px] text-red-600 hover:underline" data-product-id="${item.productId}">Hapus</button>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderCart() {
+        const cart = window.App.loadCart();
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountEl.textContent = totalItems;
+        
+        if (totalItems === 0) {
+          emptyCartEl.classList.remove('hidden');
+          cartContainerEl.classList.add('hidden');
+          return;
+        }
+        
+        emptyCartEl.classList.add('hidden');
+        cartContainerEl.classList.remove('hidden');
+        
+        // Render cart items
+        cartItemsEl.innerHTML = cart
+          .map((item) => {
+            const product = window.App.findProductById(item.productId);
+            if (!product) return '';
+            return renderCartItem(item, product);
+          })
+          .join('');
+        
+        // Update total
+        const total = window.App.getCartTotal();
+        cartTotalEl.textContent = window.App.formatPrice(total);
+        
+        // Check cart availability
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const cartWarnings = document.getElementById('cart-warnings');
+        const availability = window.App.checkCartAvailability();
+        
+        if (!availability.valid) {
+          checkoutBtn.classList.add('opacity-50', 'pointer-events-none', 'cursor-not-allowed');
+          cartWarnings.classList.remove('hidden');
+          
+          cartWarnings.innerHTML = `
+            <p class="font-medium mb-1">⚠️ Ada masalah dengan item di keranjang:</p>
+            <ul class="list-disc list-inside">
+              ${availability.issues.map(issue => {
+                const product = window.App.findProductById(issue.id);
+                return `<li>${product ? product.name : 'Produk'}: ${issue.message}</li>`;
+              }).join('')}
+            </ul>
+            <p class="mt-1">Harap sesuaikan jumlah atau hapus item yang bermasalah.</p>
+          `;
+        } else {
+          checkoutBtn.classList.remove('opacity-50', 'pointer-events-none', 'cursor-not-allowed');
+          cartWarnings.classList.add('hidden');
+        }
+      }
+
+      // Initialize
+      renderCart();
+      
+      // Handle quantity changes and item removal
+      cartItemsEl.addEventListener('click', function(e) {
+        const decBtn = e.target.closest('.quantity-dec');
+        const incBtn = e.target.closest('.quantity-inc');
+        const removeBtn = e.target.closest('.remove-item');
+        
+        if (decBtn) {
+          const productId = decBtn.dataset.productId;
+          const cart = window.App.loadCart();
+          const item = cart.find(i => i.productId === productId);
+          if (item && item.quantity > 1) {
+            window.App.updateCartQuantity(productId, item.quantity - 1);
+            renderCart();
+          }
+        }
+        
+        if (incBtn) {
+          const productId = incBtn.dataset.productId;
+          const cart = window.App.loadCart();
+          const item = cart.find(i => i.productId === productId);
+          const product = window.App.findProductById(productId);
+          
+          if (item && product && item.quantity < product.stock && product.isAvailable) {
+            window.App.updateCartQuantity(productId, item.quantity + 1);
+            renderCart();
+          } else if (product && item.quantity >= product.stock) {
+            // Show quick feedback if trying to exceed stock
+            incBtn.classList.add('bg-red-100');
+            setTimeout(() => incBtn.classList.remove('bg-red-100'), 500);
+          }
+        }
+        
+        if (removeBtn) {
+          const productId = removeBtn.dataset.productId;
+          window.App.removeFromCart(productId);
+          renderCart();
+        }
+      });
+      
+      // Handle duration input changes
+      cartItemsEl.addEventListener('input', function(e) {
+        const durationInput = e.target.closest('.duration-input');
+        
+        if (durationInput) {
+          const productId = durationInput.dataset.productId;
+          let duration = parseInt(durationInput.value, 10);
+          
+          // Validasi durasi
+          if (isNaN(duration) || duration < 1) {
+            duration = 1;
+            durationInput.value = 1;
+          }
+          
+          window.App.updateCartItemDuration(productId, duration);
+          renderCart();
+        }
+      });
+      
+      // Clear cart button
+      clearCartBtn.addEventListener('click', function() {
+        if (confirm('Yakin ingin mengosongkan keranjang?')) {
+          window.App.clearCart();
+          renderCart();
+        }
+      });
+    </script>
+  </body>
+</html>

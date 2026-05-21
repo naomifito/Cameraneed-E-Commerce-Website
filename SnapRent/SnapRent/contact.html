@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontak Admin - SnapRent Multimedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+  </head>
+  <body class="bg-gray-50 text-slate-900">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-20">
+      <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-900 text-white flex items-center justify-center font-semibold">S</div>
+          <span class="font-semibold text-blue-900">SnapRent Multimedia</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="index.html#hero" class="hover:text-blue-600">Beranda</a>
+          <a href="catalog.html" class="hover:text-blue-600">Katalog</a>
+          <a href="orders.html" class="hover:text-blue-600">Riwayat Order</a>
+          <a href="contact.html" class="text-blue-700">Kontak</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-10 text-sm">
+      <header class="mb-4">
+        <h1 class="text-2xl font-semibold text-blue-900 mb-1">Kontak Admin</h1>
+        <p class="text-xs text-slate-600">Silakan hubungi admin SnapRent melalui WhatsApp untuk ketersediaan unit, negosiasi harga, atau pertanyaan lainnya.</p>
+      </header>
+
+      <section class="bg-white rounded-lg border p-4 flex flex-col gap-3">
+        <div>
+          <p class="text-[11px] text-slate-500 mb-0.5">Nomor WhatsApp Admin</p>
+          <p class="text-base font-semibold text-blue-900">+62 812-1949-8744</p>
+        </div>
+        <a href="https://wa.me/6281219498744" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-green-500 text-white text-sm font-semibold hover:bg-green-600 w-fit">
+          <span>Buka WhatsApp</span>
+        </a>
+        <p class="text-[11px] text-slate-500">Jam operasional: 09.00 - 21.00 WIB (setiap hari). Di luar jam tersebut, respon mungkin lebih lambat.</p>
+      </section>
+    </main>
+
+    <footer class="border-t bg-gray-50 mt-8">
+      <div class="max-w-3xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>© <span id="year"></span> SnapRent Multimedia.</p>
+        <a href="https://wa.me/6281219498744" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-yellow-300 text-blue-900 font-semibold hover:bg-yellow-400">WhatsApp Admin</a>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

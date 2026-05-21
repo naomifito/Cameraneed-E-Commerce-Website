@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SnapRent Multimedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Jasa rental alat multimedia profesional: kamera, lighting, audio, dan projector." />
+    
+
+  </head>
+  <body class="bg-gray-50 text-slate-900">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-20">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-900 text-white flex items-center justify-center font-semibold">S</div>
+          <span class="font-semibold text-blue-900">SnapRent Multimedia</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="#hero" class="hover:text-blue-600">Beranda</a>
+          <a href="#katalog" class="hover:text-blue-600">Katalog</a>
+          <a href="orders.html" class="hover:text-blue-600">Riwayat Order</a>
+          <a href="contact.html" class="hover:text-blue-600">Kontak</a>
+        </nav>
+        <div class="hidden md:flex items-center gap-2">
+          <a href="cart.html" id="cart-btn" class="inline-flex items-center px-4 py-2 rounded-md bg-yellow-400 text-blue-900 text-sm font-semibold hover:bg-yellow-300">
+            Keranjang <span id="cart-count" class="ml-1.5 inline-flex w-5 h-5 rounded-full bg-blue-900 text-white items-center justify-center text-xs">0</span>
+          </a>
+          <a href="catalog.html" class="inline-flex px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">Lihat Katalog</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="hero" class="bg-blue-900 text-white">
+        <div class="max-w-6xl mx-auto px-4 py-16">
+          <div class="text-center max-w-3xl mx-auto">
+            <p class="uppercase tracking-wide text-blue-200 text-xs font-semibold mb-2">Rental alat multimedia</p>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">Sewa Kamera, Lighting, dan Audio dengan Mudah & Cepat</h1>
+            <p class="text-blue-100 mb-6 text-sm md:text-base">SnapRent menyediakan berbagai peralatan multimedia untuk kebutuhan produksi, live event, dan konten kreator. Tanpa login, cukup pilih alat, isi form, dan lakukan pembayaran via QR.</p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <a href="catalog.html" class="px-5 py-2.5 rounded-md bg-blue-500 text-sm font-semibold hover:bg-blue-400">Mulai Sewa Sekarang</a>
+              <a href="orders.html" class="px-5 py-2.5 rounded-md border border-blue-300 text-sm font-semibold text-blue-100 hover:bg-blue-800/60">Lihat Riwayat Order</a>
+            </div>
+          </div>
+          
+          <div class="mt-10 grid sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+            <div class="bg-blue-800/60 rounded-lg p-4 border border-blue-700">
+              <h3 class="font-bold text-blue-100">Kamera</h3>
+              <p class="text-white mt-1">Mirrorless & DSLR</p>
+            </div>
+            <div class="bg-blue-800/60 rounded-lg p-4 border border-blue-700">
+              <h3 class="font-bold text-blue-100">Lighting</h3>
+              <p class="text-white mt-1">Softbox & RGB</p>
+            </div>
+            <div class="bg-blue-800/60 rounded-lg p-4 border border-blue-700">
+              <h3 class="font-bold text-blue-100">Audio</h3>
+              <p class="text-white mt-1">Wireless & Shotgun</p>
+            </div>
+            <div class="bg-blue-800/60 rounded-lg p-4 border border-blue-700">
+              <h3 class="font-bold text-blue-100">Lainnya</h3>
+              <p class="text-white mt-1">Tripod, Recorder, Projector</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Highlight kategori -->
+      <section id="katalog" class="max-w-6xl mx-auto px-4 py-12">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-xl md:text-2xl font-semibold text-blue-900 mb-1">Kategori Unggulan</h2>
+            <p class="text-sm text-slate-600">Pilih kategori alat multimedia sesuai kebutuhan produksi Anda.</p>
+          </div>
+          <a href="catalog.html" class="hidden md:inline-flex text-sm font-semibold text-blue-600 hover:text-blue-700">Lihat semua produk →</a>
+        </div>
+        <div id="featured-categories" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 text-sm"></div>
+        <div class="mt-6 md:hidden">
+          <a href="catalog.html" class="inline-flex px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">Lihat semua produk</a>
+        </div>
+      </section>
+
+      <!-- Proses sederhana -->
+      <section class="bg-white border-y">
+        <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-6 text-sm">
+          <div>
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold mb-3">1</div>
+            <h3 class="font-semibold text-blue-900 mb-1">Pilih alat</h3>
+            <p class="text-slate-600">Telusuri katalog berdasarkan kategori seperti kamera, lighting, audio, hingga projector.</p>
+          </div>
+          <div>
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold mb-3">2</div>
+            <h3 class="font-semibold text-blue-900 mb-1">Isi form pemesanan</h3>
+            <p class="text-slate-600">Masukkan data diri, jadwal sewa, dan catatan tambahan. Tidak perlu membuat akun.</p>
+          </div>
+          <div>
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold mb-3">3</div>
+            <h3 class="font-semibold text-blue-900 mb-1">Bayar via QR</h3>
+            <p class="text-slate-600">Lakukan pembayaran melalui QR code, lalu pantau status order dan ajukan edit bila diperlukan.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ singkat kebijakan -->
+      <section class="max-w-6xl mx-auto px-4 py-12 text-sm">
+        <h2 class="text-xl md:text-2xl font-semibold text-blue-900 mb-4">Kebijakan Penyewaan Singkat</h2>
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="bg-white rounded-lg border p-4">
+            <h3 class="font-semibold text-blue-900 mb-1">Pembatalan</h3>
+            <p class="text-slate-600">H-2: refund penuh. H-1: DP hangus dan pembatalan tidak dapat dilakukan di sistem.</p>
+          </div>
+          <div class="bg-white rounded-lg border p-4">
+            <h3 class="font-semibold text-blue-900 mb-1">Edit Order</h3>
+            <p class="text-slate-600">Perubahan data order hanya bisa dilakukan maksimal 8 jam setelah order dibuat.</p>
+          </div>
+          <div class="bg-white rounded-lg border p-4">
+            <h3 class="font-semibold text-blue-900 mb-1">Tanpa Akun</h3>
+            <p class="text-slate-600">Semua riwayat order disimpan di perangkat Anda melalui penyimpanan lokal browser.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+        <p>  SnapRent Multimedia. Semua hak cipta dilindungi.</p>
+        <a href="https://wa.me/6281219498744" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-yellow-300 text-blue-900 font-semibold hover:bg-yellow-400">WhatsApp Admin</a>
+      </div>
+    </footer>
+
+    <script src="js/api-adapter.js"></script>
+    <script src="app.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Load featured categories
+      function initializeCatalog() {
+        if (window.App && window.App.renderFeaturedCategories) {
+          console.log('Rendering featured categories');
+          window.App.renderFeaturedCategories();
+        } else {
+          console.error('App not loaded properly. Unable to render categories.');
+          document.getElementById('featured-categories').innerHTML = 
+            '<div class="col-span-full bg-yellow-50 border border-yellow-200 p-3 rounded text-amber-700">Mencoba memuat katalog... <button onclick="initializeCatalog()" class="underline">Coba lagi</button></div>';
+        }
+      }
+      
+      // Run initialization after page loads
+      window.addEventListener('load', initializeCatalog);
+      
+      // Update cart count badge
+      if (window.App) {
+        const cartCount = document.getElementById('cart-count');
+        if (cartCount) {
+          const cart = window.App.loadCart();
+          const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+          cartCount.textContent = count;
+        }
+      }
+    </script>
+  </body>
+</html>
