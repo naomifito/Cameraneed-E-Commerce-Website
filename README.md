@@ -17,3 +17,21 @@ A WordPress-based e-commerce website focused on camera and photography product s
 - Contact Form 7
 - PHP
 - MySQL
+
+## Homepage Preview
+![Homepage](homepage.png)
+
+## Product Preview
+![Shop](product.png)
+
+## Pop Up Cart Preview
+![Shop](popupcart.png)
+
+## Cart Preview
+![Shop](cart.png)
+
+## Checkout Preview
+![Shop](co.png)
+
+## Author
+Naomi Fito
